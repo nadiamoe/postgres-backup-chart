@@ -61,9 +61,6 @@ podLabels: {}
 securityContext:
   # Run as root to be able to `apt install` dependencies.
   runAsUser: 0
-  capabilities:
-    drop:
-    - ALL
 
 resources:
   requests:
