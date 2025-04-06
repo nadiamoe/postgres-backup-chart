@@ -62,7 +62,7 @@ spec:
                     {{- end }}
                     {{- end }}
 
-                    export MC_HOST_backups="$S3_SCHEME$S3_KEY_ID:$S3_KEY_SECRET@$S3_HOST"
+                    export MC_HOST_backups="${S3_SCHEME}://${S3_KEY_ID}:${S3_KEY_SECRET}@${S3_HOST}"
 
                     echo "Starting PG dump"
                     pg_dump -d "$PGDATABASE" \
