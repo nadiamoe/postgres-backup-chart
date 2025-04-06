@@ -1,0 +1,7 @@
+apiVersion: v2
+name: postgres-backup
+description: A Helm chart to render a backup job for postgres databases.
+
+type: application
+
+version: 0.0.0

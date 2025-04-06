@@ -1,0 +1,74 @@
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+schedule: "31 5 */2 * *"
+activeDeadlineSeconds: 1800 # 30 minutes.
+pgImage:
+  # Any image with `psql` and `zstd` available would work, we use the cnpg one for update uniformity.
+  repository: ghcr.io/cloudnative-pg/postgresql
+  tag: 17.4@sha256:0cd9ecf3cc691e8e757ccc74931b95de41fcec8e54c0405df2dc38f3a1741073
+
+gpg:
+  keyURLs:
+    # - https://dl.nadia.moe/nadia@nadia.moe.asc
+  recvKeys:
+    # - 1EF288E481DE5737FAC53B1218B045BC09E9B52A
+  recipients:
+    # - nadia@santalla.io
+
+zstd:
+  args: -9 -T2 --size-hint=8192MiB
+
+mc:
+  # Backblaze B2 users need `--checksum=md5` as a workaround as backblaze's s3 api does not support anything else.
+  args: --checksum=md5 --part-size=64Mi --concurrent=4
+
+# Map of environment variables (to allow merging), which are added to the pod.
+# All values are mandatory and must either be defined here, or in the `secret` key below.
+# Templates are accepted as values.
+env:
+  S3_SCHEME:
+    value: https
+  S3_ENDPOINT: ~
+  S3_BUCKET: ~
+  S3_KEY_ID: ~
+  S3_KEY_SECRET: ~
+  PGHOST: ~
+  PGUSER: ~
+  PGPASSWORD: ~
+    # valueFrom:
+    #   secretKeyRef:
+    #     name: {{ .Release.Name }}-important-secret
+    #     key: password
+  PGDATABASE: ~
+
+# Contents of the inline secret, which the chart automatically mounts as environment to the pod. If you do not have
+# credentials on a secret already, use this.
+# Templates are accepted as values.
+secret:
+  # S3_KEY_ID: example
+  # S3_KEY_SECRET: example
+  # PGPASSWORD: '{{ .Values.something }}'
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+securityContext:
+  # Run as root to be able to `apt install` dependencies.
+  runAsUser: 0
+  capabilities:
+    drop:
+    - ALL
+
+resources:
+  requests:
+    cpu: "1"
+    memory: 512Mi
+  limits:
+    cpu: "3"
+    memory: 2Gi
