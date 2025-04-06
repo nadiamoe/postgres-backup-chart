@@ -30,7 +30,7 @@ mc:
 env:
   S3_SCHEME:
     value: https
-  S3_ENDPOINT: ~
+  S3_HOST: ~
   S3_BUCKET: ~
   S3_KEY_ID: ~
   S3_KEY_SECRET: ~
