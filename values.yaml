@@ -7,7 +7,7 @@ activeDeadlineSeconds: 1800 # 30 minutes.
 pgImage:
   # Any image with `psql` and `zstd` available would work, we use the cnpg one for update uniformity.
   repository: ghcr.io/cloudnative-pg/postgresql
-  tag: 17.5@sha256:a02f8de086c02c6b932df4114f97594803ef99cd5782e52100f24ed40034bac1
+  tag: 17.5@sha256:b1deeed2aa998b2f381e39c5cadb9ec06127708c8bd62965743af19abf21628f
 
 gpg:
   keyURLs:
